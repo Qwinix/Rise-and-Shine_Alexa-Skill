@@ -10,7 +10,9 @@
             "Alexa ask rise and shine"
           ],
           "name": "Rise and Shine",
-          "description": "Sample Full Description"
+          "description": "Sample Full Description",
+          "smallIconUri": "https://s3.amazonaws.com/my-morning-meditation-prod/GUI/skill-icons/MS_Alexa_Skill_MyMorningPractice_Small.png",
+          "largeIconUri": "https://s3.amazonaws.com/my-morning-meditation-prod/GUI/skill-icons/MS_Alexa_Skill_MyMorningPractice_Large.png"
         }
       },
       "isAvailableWorldwide": true,
