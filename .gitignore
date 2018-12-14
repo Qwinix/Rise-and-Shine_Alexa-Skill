@@ -4,6 +4,7 @@ logs
 
 # Dependency directories
 lambda/node_modules/
+.idea/
 
 # Files
 lambda/package-lock.json
