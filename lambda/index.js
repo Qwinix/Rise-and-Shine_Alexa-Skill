@@ -12,13 +12,13 @@ const LaunchRequestHandler = {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     async handle(handlerInput) {
-
         const playbackInfo = await getPlaybackInfo(handlerInput);
+        console.log('inside launch request');
         const attributes = handlerInput.attributesManager.getSessionAttributes();
         console.log('launch request attributes:', attributes);
         console.log("playbackInfo in launch request:", JSON.stringify(playbackInfo));
 
-        let prompt, random, template, reprompt, end;
+        let prompt, random, template, reprompt, end, greetings;
 
         if (playbackInfo.visitCount === 0) {
             console.log("first time [new] user");
@@ -26,9 +26,9 @@ const LaunchRequestHandler = {
             playbackInfo.visitCount++;
 
             // Prompt Text
-            prompt = 'Welcome to Rise and Shine! Let\'s start the day with an uplifting morning meditation! Would you like to listen to Good Morning or Morning Practice?';
+            prompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_FullWelcomeMessage.mp3\"/>' + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoices.mp3\"/>';
             // Re-Prompt Text
-            reprompt = 'I didn\'t catch that. Would you like to listen to Good Morning or Morning Practice?';
+            reprompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_ErrorMessage-One.mp3\"/>' + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoices.mp3\"/>';
 
             // setting sessions and repeat option
             attributes.cancelSession = 'cancel_true';
@@ -50,7 +50,6 @@ const LaunchRequestHandler = {
                 .reprompt(reprompt)
                 .withShouldEndSession(false)
                 .getResponse();
-
         } else if (!playbackInfo.hasPreviousPlaybackSession && playbackInfo.visitCount > 0) {
             console.log("No previous session");
 
@@ -64,24 +63,25 @@ const LaunchRequestHandler = {
                 case 25:
                 case 30:
 
-                    prompt = 'Welcome back to rise and shine! You\'ve started your morning with us a few days in a row now! Well done you! Would you like to listen to good morning or morning practice?';
+                    prompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MilestoneMessageOne.mp3\"/>' + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoices.mp3\"/>';
                     break;
 
                 default:
                     random = RandomModule.launch[Math.floor(Math.random() * RandomModule.launch.length)];
-                    prompt = `Good morning to you. Welcome back to rise and shine! ${random} Would you like to listen to good morning or morning practice?`;
+                    greetings = RandomModule.greetings[Math.floor(Math.random() * RandomModule.greetings.length)];
+                    prompt =  greetings + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_AbbreviatedWelcomeMessage.mp3\"/>' + random + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoices.mp3\"/>';
             }
 
             if (playbackInfo.listenCount == 10) {
                 random = RandomModule.greetings[Math.floor(Math.random() * RandomModule.greetings.length)];
-                prompt = `${random} Welcome back to rise and shine! You\'re a morning meditation master! Would you like to start your day with good morning or morning practice?`;
+                prompt = random + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_AbbreviatedWelcomeMessage.mp3\"/>' + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MilestoneMessageTwo.mp3\"/>';
             } else if ((playbackInfo.listenCount != 0) && (playbackInfo.listenCount % 25) == 0) {
                 random = RandomModule.greetings[Math.floor(Math.random() * RandomModule.greetings.length)];
-                prompt = `${random} Welcome back to rise and shine! You\'re a morning meditation master! Would you like to start your day with good morning or morning practice?`;
+                prompt = random + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_AbbreviatedWelcomeMessage.mp3\"/>' + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MilestoneMessageTwo.mp3\"/>';
             }
 
             // generic re-prompt
-            reprompt = 'I didn\'t catch that. Would you like to listen to Good Morning or Morning Practice?';
+            reprompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_ErrorMessage-One.mp3\"/>' + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoices.mp3\"/>';
 
             // check if display is supported
             if (supportsDisplay(handlerInput)) {
@@ -117,15 +117,15 @@ const LaunchRequestHandler = {
                 case 25:
                 case 30:
                     end = RandomModule.resumeOptions[Math.floor(Math.random() * RandomModule.resumeOptions.length)];
-                    prompt = 'Welcome back to rise and shine! You\'ve started your morning with us a few days in a row now! Well done you! You were listening to ' + constants.audioData[playbackInfo.index.toString()].tagline + end;
+                    prompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MilestoneMessageOne.mp3\"/>' + constants.audioData[playbackInfo.index.toString()].listeningToMeditation + end;
                     break;
 
                 default:
                     end = RandomModule.resumeOptions[Math.floor(Math.random() * RandomModule.resumeOptions.length)];
-                    prompt = 'Welcome back to rise and shine! You were listening to ' + constants.audioData[playbackInfo.index.toString()].tagline + end;
+                    prompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_AbbreviatedWelcomeMessage.mp3\"/>' + constants.audioData[playbackInfo.index.toString()].listeningToMeditation + end;
             }
 
-            reprompt = 'I didn\'t catch that. Would you like to listen to Good Morning or Morning Practice?';
+            reprompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_ErrorMessage-One.mp3\"/>' + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoices.mp3\"/>';
 
             console.log("prompt:", prompt);
             console.log("reprompt:", reprompt);
@@ -285,16 +285,24 @@ const meditationIntent = {
 
             if (attributes.wrongMeditationCount) {
                 meditationID = constants.freeMeditations[Math.floor(Math.random() * constants.freeMeditations.length)];
-                prompt = 'I couldn\'t find that meditation, but I think you will like this one.';
+                prompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_FallbackIntent.mp3\"/>';
                 audioName = constants.audioData[meditationID.toString()].cardTitle;
 
+                const start = RandomModule.meditationFirst[Math.floor(Math.random() * RandomModule.meditationFirst.length)];
+                const response = constants.audioData[meditationID.toString()].taglineVoiceover;
+                const first = RandomModule.meditationStarts[Math.floor(Math.random() * RandomModule.meditationStarts.length)];
+                const end = RandomModule.meditationLast[Math.floor(Math.random() * RandomModule.meditationLast.length)];
+                message = start + response + first + end + ' <break time=\"3.00s\"/>';
+                console.log("message inside", message);
+
+                prompt = prompt + '<break time=\"2.00s\"/>' + message;
                 attributes.wrongMeditationCount = false;
                 attributes.repeatResponse = prompt;
                 handlerInput.attributesManager.setSessionAttributes(attributes);
 
                 return controller.play(handlerInput, prompt, audioName);
             } else {
-                prompt = reprompt = 'I didn\'t catch that. Would you like to listen to good morning or morning practice?';
+                prompt = reprompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_ErrorMessage-One.mp3\"/>' + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoices.mp3\"/>';
 
                 attributes.wrongMeditationCount = true;
                 attributes.repeatResponse = prompt;
@@ -328,6 +336,56 @@ const ResumeIntent = {
     },
     handle(handlerInput) {
         return controller.resume(handlerInput);
+    },
+};
+
+const NavigateBackHandler = {
+    async canHandle(handlerInput) {
+        const playbackInfo = await getPlaybackInfo(handlerInput);
+        const request = handlerInput.requestEnvelope.request;
+
+        if (!playbackInfo.inPlaybackSession) {
+            return request.type === 'IntentRequest' && (request.intent.name === 'NavigateBackHandler' );
+        }
+    },
+    async handle(handlerInput) {
+        const playbackInfo = await getPlaybackInfo(handlerInput);
+        console.log('inside launch request');
+        const attributes = handlerInput.attributesManager.getSessionAttributes();
+        console.log('launch request attributes:', attributes);
+        console.log("playbackInfo in launch request:", JSON.stringify(playbackInfo));
+
+        let prompt, random, template, reprompt, end, greetings;
+
+        playbackInfo.visitCount++;
+        prompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoices.mp3\"/>';
+
+        // generic re-prompt
+        reprompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_ErrorMessage-One.mp3\"/>' + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoices.mp3\"/>';
+
+        // check if display is supported
+        if (supportsDisplay(handlerInput)) {
+            template = show.getTemplate('ListTemplate2');
+            console.log("list template 2");
+            handlerInput.responseBuilder.addRenderTemplateDirective(template);
+            attributes.responseTemplateSatue = true;
+            attributes.responseTemplate = template;
+            handlerInput.responseBuilder.addHintDirective(RandomModule.displayListTemplateHint[Math.floor(Math.random() * RandomModule.displayListTemplateHint.length)]);
+        }
+
+        console.log("return back prompt:", prompt);
+        console.log("return back reprompt:", reprompt);
+
+        // set sessions and repeat text
+        attributes.cancelSession = 'cancel_true';
+        attributes.repeatResponse = prompt;
+        handlerInput.attributesManager.setSessionAttributes(attributes);
+
+        return handlerInput.responseBuilder
+        .speak(prompt)
+        .reprompt(reprompt)
+        .withShouldEndSession(false)
+        .getResponse();
     },
 };
 
@@ -390,7 +448,7 @@ const LoopOnHandler = {
         playbackSetting.loop = true;
 
         return handlerInput.responseBuilder
-            .speak('Loop turned on.')
+            .speak('<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_NowLooping.mp3\"/>')
             .getResponse();
     },
 };
@@ -410,7 +468,7 @@ const LoopOffHandler = {
         playbackSetting.loop = false;
 
         return handlerInput.responseBuilder
-            .speak('Loop turned off.')
+            .speak('<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_Loop_Off.mp3\"/>')
             .getResponse();
     },
 };
@@ -437,7 +495,7 @@ const ShuffleOnHandler = {
 
         let start = RandomModule.stop[Math.floor(Math.random() * RandomModule.stop.length)];
         return handlerInput.responseBuilder
-            .speak(start + '! Shuffling meditations now.')
+            .speak(start + ' Shuffling meditations now.')
             .getResponse();
     },
 };
@@ -463,7 +521,7 @@ const ShuffleOffHandler = {
 
         var start = RandomModule.stop[Math.floor(Math.random() * RandomModule.stop.length)];
         return handlerInput.responseBuilder
-            .speak(start + '! I\'ll stop shuffling your meditations.')
+            .speak(start + ' I\'ll stop shuffling your meditations.')
             .getResponse();
 
     },
@@ -483,7 +541,7 @@ const StartOverHandler = {
 
         playbackInfo.offsetInMilliseconds = 0;
 
-        return controller.play(handlerInput);
+        return controller.play(handlerInput, 'startOver');
     },
 };
 
@@ -521,7 +579,6 @@ const RepeatHandler = {
                     .getResponse();
             }
         }
-
     },
 };
 
@@ -548,7 +605,7 @@ const YesHandler = {
 
             if (attributes.yesIntentPromptAgain) {
                 meditationID = constants.freeMeditations[Math.floor(Math.random() * constants.freeMeditations.length)];
-                prompt = 'I couldn\'t find that meditation, but I think you will like this one.';
+                prompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_FallbackIntent.mp3\"/>';
                 audioName = constants.audioData[meditationID.toString()].cardTitle;
 
                 attributes.yesIntentPromptAgain = false;
@@ -557,7 +614,7 @@ const YesHandler = {
 
                 return controller.play(handlerInput, prompt, audioName);
             } else {
-                prompt = reprompt = 'I didn\'t catch that. Would you like to listen to good morning or morning practice?';
+                prompt = reprompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_ErrorMessage-One.mp3\"/>' + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoices.mp3\"/>';
 
                 attributes.yesIntentPromptAgain = true;
                 attributes.repeatResponse = prompt;
@@ -594,7 +651,7 @@ const NoHandler = {
 
 
             random = RandomModule.stop[Math.floor(Math.random() * RandomModule.stop.length)];
-            prompt = reprompt = random + '. Would you like to listen to good morning or morning practice?';
+            prompt = reprompt = random + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoices.mp3\"/>';
 
             // check if display is supported
             if (supportsDisplay(handlerInput)) {
@@ -620,14 +677,14 @@ const NoHandler = {
 
             if (attributes.noIntentPromptAgain) {
 
-                prompt = RandomModule.stop[Math.floor(Math.random() * RandomModule.stop.length)] + '. Have a ' + RandomModule.stopLast[Math.floor(Math.random() * RandomModule.stopLast.length)] + ' day';
+                prompt = RandomModule.stop[Math.floor(Math.random() * RandomModule.stop.length)] + RandomModule.stopLast[Math.floor(Math.random() * RandomModule.stopLast.length)];
 
                 return handlerInput.responseBuilder
                     .speak(prompt)
                     .withShouldEndSession(true)
                     .getResponse();
             } else {
-                prompt = reprompt = 'I didn\'t catch that. Would you like to listen to good morning or morning practice?';
+                prompt = reprompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_ErrorMessage-One.mp3\"/>' + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoices.mp3\"/>';
 
                 attributes.noIntentPromptAgain = true;
                 attributes.repeatResponse = prompt;
@@ -657,7 +714,7 @@ const FallbackIntent = {
 
         const attributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let prompt = 'I didn\'t catch that. Would you like to listen to Good Morning or Morning Practice?';
+        let prompt = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_ErrorMessage-One.mp3\"/>' + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoices.mp3\"/>';
         attributes.repeatResponse = prompt;
 
         return handlerInput.responseBuilder
@@ -678,7 +735,7 @@ const HelpHandler = {
         let prompt, reprompt;
 
 
-        prompt = reprompt = `${start} you're listening to rise and shine. I have two meditations you can choose from. One is four minutes and one is seven minutes. You can pause, resume, shuffle, start over and play the next or previous one at any time. Would you like to listen to good morning or morning practice today?`;
+        prompt = reprompt = start + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_Help.mp3\"/>' + '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationChoicesToday.mp3\"/>';
 
         attributes.repeatResponse = prompt;
         attributes.responseTemplateSatue = false;
@@ -856,24 +913,36 @@ const controller = {
                 console.log("podcast selectedToken", podcast);
                 token = podcast.id;
             }
-            start = 'you\'ve selected ';
+
+            if(message === 'startOver'){
+                const response = podcast.meditationNameVoiceover;
+                message = '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_Launching.mp3\"/>' + response + ' <break time=\"3.00s\"/>';
+                console.log("message inside", message);
+            }
+
+            if (message === '') {
+                const response = podcast.selectedTagline;
+                const first = RandomModule.meditationStarts[Math.floor(Math.random() * RandomModule.meditationStarts.length)];
+                const end = RandomModule.meditationLast[Math.floor(Math.random() * RandomModule.meditationLast.length)];
+                message = response + first + end + ' <break time=\"3.00s\"/>';
+                console.log("message inside", message);
+            }
         } else {
             console.log("inside play else, index value:", index);
             podcast = constants.audioData[index.toString()];
             token = index;
             start = RandomModule.meditationFirst[Math.floor(Math.random() * RandomModule.meditationFirst.length)];
+            if (message === '') {
+                const response = podcast.taglineVoiceover;
+                const first = RandomModule.meditationStarts[Math.floor(Math.random() * RandomModule.meditationStarts.length)];
+                const end = RandomModule.meditationLast[Math.floor(Math.random() * RandomModule.meditationLast.length)];
+                message = start + response + first + end + ' <break time=\"3.00s\"/>';
+                console.log("message inside", message);
+            }
         }
 
         playbackInfo.nextStreamEnqueued = false;
         playbackInfo.meditationType = podcast.type;
-
-        if (message === '') {
-            const response = podcast.tagline;
-            const first = RandomModule.meditationStarts[Math.floor(Math.random() * RandomModule.meditationStarts.length)];
-            const end = RandomModule.meditationLast[Math.floor(Math.random() * RandomModule.meditationLast.length)];
-            message = start + response + first + end + ' <break time=\"3.00s\"/>';
-            console.log("message inside", message);
-        }
 
 
         console.log('message outside:', message);
@@ -945,7 +1014,8 @@ const controller = {
         playbackInfo.meditationType = podcast.type;
 
         end = RandomModule.meditationLast[Math.floor(Math.random() * RandomModule.meditationLast.length)];
-        message = `Resuming ${podcast.tagline} ${end} <break time=\"2.00s\"/>`;
+        const settleIn= RandomModule.meditationStarts[Math.floor(Math.random() * RandomModule.meditationStarts.length)];
+        message = podcast.resumeMeditation + settleIn + end + '<break time=\"2.00s\"/>';
 
         console.log('message outside:', message);
         console.log('playbackInfo inside play controller:', JSON.stringify(playbackInfo));
@@ -1139,8 +1209,9 @@ exports.handler = skillBuilder
         StartOverHandler,
         ExitHandler,
         AudioPlayerEventHandler,
+        NavigateBackHandler,
+        RepeatHandler,
         FallbackIntent,
-        RepeatHandler
     )
     .addRequestInterceptors(LoadPersistentAttributesRequestInterceptor)
     .addResponseInterceptors(SavePersistentAttributesResponseInterceptor)

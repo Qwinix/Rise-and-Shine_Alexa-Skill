@@ -37,7 +37,7 @@ module.exports.getTemplate = (type, params = null) => {
                         'url': params.backgroundImage
                     }]
                 },
-                'title': 'Would you like to resume',
+                'title': 'Do you want to keep listening to',
                 'textContent': {
                     'primaryText': {
                         'text': params.tagline.replace('.', '?'),

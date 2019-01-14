@@ -1,0 +1,40 @@
+{
+  "deploy_settings": {
+    "meditation-studio": {
+      "skill_id": "amzn1.ask.skill.218793b7-9889-4cc7-a501-e78ef251a375",
+      "was_cloned": false,
+      "resources": {
+        "manifest": {
+          "eTag": "7b281bba49fee5d0d78b06c3191dd077"
+        },
+        "interactionModel": {
+          "en-US": {
+            "eTag": "d07527a852ce185c6066482429159447"
+          }
+        },
+        "lambda": [
+          {
+            "arn": "arn:aws:lambda:us-east-1:316322997689:function:ask-custom-Rise_and_Shine-meditation-studio",
+            "awsRegion": "us-east-1",
+            "functionName": "arn:aws:lambda:us-east-1:316322997689:function:ask-custom-Rise_and_Shine-meditation-studio",
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "revisionId": "9bfdf272-055f-4abc-9ad8-3b48be7325b1"
+          }
+        ]
+      },
+      "merge": {
+        "manifest": {
+          "apis": {
+            "custom": {
+              "endpoint": {
+                "uri": "arn:aws:lambda:us-east-1:316322997689:function:ask-custom-Rise_and_Shine-meditation-studio"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

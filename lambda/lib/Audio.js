@@ -3,7 +3,7 @@ const RiseAndShineSkillConfig = require('../skillconfig.json');
 
 module.exports.skill = {
     appId: RiseAndShineSkillConfig.appId,
-    dynamoDBTableName: RiseAndShineSkillConfig.table_name,
+    dynamoDBTableName: "rise-and-shine-production",
 };
 
 module.exports.audioData = {
@@ -12,6 +12,11 @@ module.exports.audioData = {
         'type': 'freeMeditation',
         'id': 0,
         'tagline': 'Good Morning, a four minute meditation.',
+        'meditationNameVoiceover': '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_GoodMorning.mp3\"/>',
+        'taglineVoiceover': '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_GoodMorning_Time.mp3\"/>',
+        'selectedTagline': '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationSelection_GoodMorning.mp3\"/>',
+        'listeningToMeditation': '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_ResumeMessage_GoodMorning.mp3\"/>',
+        'resumeMeditation': '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_Resume_GoodMorning.mp3\"/>',
         'prePlayText': 'Now playing Good Morning, a four minute meditation.',
         'url': 'https://s3.amazonaws.com/my-morning-meditation-audio/Good+Morning.mp3',
         'audioName': 'Good morning by Franko Heke',
@@ -25,6 +30,11 @@ module.exports.audioData = {
         'type': 'freeMeditation',
         'id': 1,
         'tagline': 'Morning Practice, a seven minute meditation.',
+        'meditationNameVoiceover': '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MorningPractice.mp3\"/>',
+        'taglineVoiceover': '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MorningPractice_Time.mp3\"/>',
+        'selectedTagline': '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_MeditationSelection_MorningPractice.mp3\"/>',
+        'listeningToMeditation': '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_ResumeMessage_MorningPractice.mp3\"/>',
+        'resumeMeditation': '<audio src=\"https://s3.amazonaws.com/my-morning-meditation-audio/voiceover/RS_Resume_MorningPractice.mp3\"/>',
         'prePlayText': 'Now playing Morning Practice, a seven minute meditation.',
         'url': 'https://s3.amazonaws.com/my-morning-meditation-audio/Morning+Practice.mp3',
         'audioName': 'Morning Practice by Franko Heke.',

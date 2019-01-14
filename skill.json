@@ -3,21 +3,53 @@
     "publishingInformation": {
       "locales": {
         "en-US": {
-          "summary": "Sample Short Description",
+          "summary": "Kickstart your day with these upbeat morning meditations.",
           "examplePhrases": [
-            "Alexa open rise and shine",
-            "Alexa tell rise and shine",
-            "Alexa ask rise and shine"
+            "Alexa, open Rise and Shine.",
+            "Alexa, ask Rise and Shine to play Good Morning.",
+            "Alexa, ask Rise and Shine to play Morning Practice."
           ],
-          "name": "Rise and Shine",
-          "description": "Sample Full Description",
+          "keywords": [
+            "morning",
+            "meditation",
+            "meditations",
+            "practice",
+            "intention",
+            "A.M.",
+            "guided",
+            "mindfulness",
+            "calm",
+            "gratitude",
+            "energy",
+            "sunrise",
+            "breath",
+            "breathing",
+            "body",
+            "awareness",
+            "mindful",
+            "scan",
+            "affirmation",
+            "rise",
+            "shine",
+            "calm",
+            "daybreak",
+            "wake",
+            "up",
+            "relaxed",
+            "relaxing",
+            "energizing",
+            "routine",
+            "zen"
+          ],
+          "name": "Rise and Shine - Meditations to Kickstart Your Day",
           "smallIconUri": "https://s3.amazonaws.com/my-morning-meditation-prod/GUI/skill-icons/MS_Alexa_Skill_MyMorningPractice_Small.png",
+          "description": "Rise and Shine by Meditation Studio offers two guided meditations designed specifically to help you start your day with peace, calm, and gratitude. A consistent morning meditation practice can reduce your overall stress and anxiety throughout the day, increase your energy, and improve your sense of well being and focus. Wake up, breathe deep, and start your day on a positive note with these quick (less than seven minutes!) and simple meditations.\n\nHere are some examples of what you can say: \n“Alexa, ask Rise and Shine to play Good Morning.” \n“Alexa, ask Rise and Shine to play Morning Practice.” \n“Alexa, play the next one.” \n“Alexa, play the previous one.”\n“Alexa, help.”\n\nThe skill includes full audio player functionality. \n\nIf Rise and Shine brightens your day, let us know by giving us a 5-star rating! \n\nIf you think Rise and Shine needs some extra love, please let us know that too at alexa@meditationstudioapp.com. We’ll do our best to make it better!\n\nOUR OTHER SKILLS:\nMeditation Studio\nLaunch Meditation Studio for award-winning guided meditations designed to help you with your everyday challenges, including sleep, stress, happiness and performance.\n\nGoodnight Kiddo\nLaunch Goodnight Kiddo for simple, guided meditations to help your little ones, ages four to ten, unwind and gently fall asleep. A premium version of this skill is included in Freetime Unlimited.\n\nPower Nap\nLaunch Power Nap for guided meditations that will help you relax, fall asleep, and recharge your batteries! \n\nABOUT MEDITATION STUDIO\nMeditation Studio is a 5-star app that offers more than 500 original guided meditations and 6 courses from some of the world’s leading teachers. Our app has been celebrated for its first-class teachers, the wide variety of meditation styles, and its beautiful and simple interface.\n\nYou can find Meditation Studio in the Apple App Store and the Google Play store.\n• Featured by Apple as “10 Best Apps of the Year” \n• Featured by TIME as “50 Best Apps of the Year” \n• Featured by Forbes as “Best Health & Fitness Apps of 2017”\n\nWhether you want to lower stress, reduce anxiety, get a good night’s sleep, increase your confidence or just feel a little more focused and productive, we’ve got you covered.\n\nFind out even more at meditationstudioapp.com.",
           "largeIconUri": "https://s3.amazonaws.com/my-morning-meditation-prod/GUI/skill-icons/MS_Alexa_Skill_MyMorningPractice_Large.png"
         }
       },
       "isAvailableWorldwide": true,
       "testingInstructions": "Sample Testing Instructions.",
-      "category": "STREAMING_SERVICE",
+      "category": "HEALTH_AND_FITNESS",
       "distributionCountries": []
     },
     "apis": {
@@ -35,6 +67,14 @@
         ]
       }
     },
-    "manifestVersion": "1.0"
+    "manifestVersion": "1.0",
+    "privacyAndCompliance": {
+      "locales": {
+        "en-US": {
+          "termsOfUseUrl": "https://www.meditationstudioapp.com/terms/",
+          "privacyPolicyUrl": "https://www.meditationstudioapp.com/privacy/"
+        }
+      }
+    }
   }
 }
