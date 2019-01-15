@@ -3,7 +3,8 @@ const RiseAndShineSkillConfig = require('../skillconfig.json');
 
 module.exports.skill = {
     appId: RiseAndShineSkillConfig.appId,
-    dynamoDBTableName: "rise-and-shine-production",
+    // dynamoDBTableName: "rise-and-shine-production",
+    dynamoDBTableName: "rise-and-shine-testing-AJ",
 };
 
 module.exports.audioData = {
