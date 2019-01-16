@@ -444,7 +444,8 @@ const LoopOnHandler = {
     },
     async handle(handlerInput) {
         const playbackSetting = await handlerInput.attributesManager.getPersistentAttributes().playbackSettings;
-
+        console.log("handlerInput.attributesManager.getPersistentAttributes(): ", JSON.stringify(handlerInput.attributesManager.getPersistentAttributes()))
+        console.log("playbackSetting",JSON.stringify(playbackSetting))
         playbackSetting.loop = true;
 
         return handlerInput.responseBuilder

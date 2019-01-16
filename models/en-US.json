@@ -1,199 +1,204 @@
 {
-  "interactionModel": {
-    "languageModel": {
-      "invocationName": "rise and shine",
-      "intents": [
-        {
-          "name": "AMAZON.CancelIntent",
-          "samples": [
-          ]
-        },
-        {
-          "name": "AMAZON.HelpIntent",
-          "samples": [
-          ]
-        },
-        {
-          "name": "AMAZON.StopIntent",
-          "samples": [
-          ]
-        },
-        {
-          "name": "AMAZON.FallbackIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.PageDownIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.NavigateHomeIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.PageUpIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.ScrollDownIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.ScrollLeftIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.ScrollRightIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.ScrollUpIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.NavigateSettingsIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.MoreIntent",
-          "samples": []
-        },
-        {
-          "name": "meditationIntent",
-          "slots": [
-            {
-              "name": "MeditationNameSlot",
-              "type": "MeditationName"
-            }
-          ],
-          "samples": [
-            "select a meditation from {MeditationNameSlot}",
-            "want to hear a meditation from {MeditationNameSlot}",
-            "start a sleep meditation",
-            "start a kids meditation",
-            "resume a meditation",
-            "my {MeditationNameSlot}",
-            "the {MeditationNameSlot}",
-            "{MeditationNameSlot} meditation",
-            "the {MeditationNameSlot} meditation",
-            "run a {MeditationNameSlot} meditation",
-            "run {MeditationNameSlot} meditation",
-            "run a meditation",
-            "load a {MeditationNameSlot} meditation",
-            "start a new meditation",
-            "open a {MeditationNameSlot} meditation",
-            "play a {MeditationNameSlot} meditation",
-            "play {MeditationNameSlot}",
-            "start {MeditationNameSlot}",
-            "start playing {MeditationNameSlot}",
-            "select new meditation",
-            "start a {MeditationNameSlot} meditation",
-            "load a meditation",
-            "open a meditation",
-            "play a meditation",
-            "start a meditation"
-          ]
-        },
-        {
-          "name": "NavigateBackHandler",
-          "slots": [],
-          "samples": [
-            "back to the beginning",
-            "what choices do i have",
-            "back to the main menu",
-            "back to the menu",
-            "menu",
-            "main menu",
-            "choices",
-            "go back",
-            "go back to the menu",
-            "start at the beginning",
-            "start from the beginning",
-            "repeat the menu",
-            "repeat the options",
-            "repeat the option"
-          ]
-        },
-        {
-          "name": "RepeatHandler",
-          "slots": [],
-          "samples": [
-            "repeat",
-            "repeat meditation",
-            "please repeat"
-          ]
-        },
-        {
-          "name": "meditationOnlyIntent",
-          "slots": [
-            {
-              "name": "MeditationOnlyNameSlot",
-              "type": "MeditationName"
-            }
-          ],
-          "samples": [
-            "{MeditationOnlyNameSlot}"
-          ]
-        },
-        {
-          "name": "AMAZON.PauseIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.ResumeIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.PreviousIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.StartOverIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.YesIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.NoIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.NextIntent",
-          "samples": []
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "rise and shine",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageUpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollLeftIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollRightIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollUpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateSettingsIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.LoopOnIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.LoopOffIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.MoreIntent",
+                    "samples": []
+                },
+                {
+                    "name": "meditationIntent",
+                    "slots": [
+                        {
+                            "name": "MeditationNameSlot",
+                            "type": "MeditationName"
+                        }
+                    ],
+                    "samples": [
+                        "select a meditation from {MeditationNameSlot}",
+                        "want to hear a meditation from {MeditationNameSlot}",
+                        "start a sleep meditation",
+                        "start a kids meditation",
+                        "resume a meditation",
+                        "my {MeditationNameSlot}",
+                        "the {MeditationNameSlot}",
+                        "{MeditationNameSlot} meditation",
+                        "the {MeditationNameSlot} meditation",
+                        "run a {MeditationNameSlot} meditation",
+                        "run {MeditationNameSlot} meditation",
+                        "run a meditation",
+                        "load a {MeditationNameSlot} meditation",
+                        "start a new meditation",
+                        "open a {MeditationNameSlot} meditation",
+                        "play a {MeditationNameSlot} meditation",
+                        "play {MeditationNameSlot}",
+                        "start {MeditationNameSlot}",
+                        "start playing {MeditationNameSlot}",
+                        "select new meditation",
+                        "start a {MeditationNameSlot} meditation",
+                        "load a meditation",
+                        "open a meditation",
+                        "play a meditation",
+                        "start a meditation"
+                    ]
+                },
+                {
+                    "name": "RepeatHandler",
+                    "slots": [],
+                    "samples": [
+                        "repeat",
+                        "repeat meditation",
+                        "please repeat"
+                    ]
+                },
+                {
+                    "name": "meditationOnlyIntent",
+                    "slots": [
+                        {
+                            "name": "MeditationOnlyNameSlot",
+                            "type": "MeditationName"
+                        }
+                    ],
+                    "samples": [
+                        "{MeditationOnlyNameSlot}"
+                    ]
+                },
+                {
+                    "name": "AMAZON.PauseIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ResumeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PreviousIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StartOverIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.YesIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NoIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NextIntent",
+                    "samples": []
+                },
+                {
+                    "name": "NavigateBackHandler",
+                    "slots": [],
+                    "samples": [
+                        "back to the beginning",
+                        "what choices do i have",
+                        "back to the main menu",
+                        "back to the menu",
+                        "menu",
+                        "main menu",
+                        "choices",
+                        "go back",
+                        "go back to the menu",
+                        "start at the beginning",
+                        "start from the beginning",
+                        "repeat the menu",
+                        "repeat the options",
+                        "repeat the option"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "MeditationName",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "good morning",
+                                "synonyms": [
+                                    "good",
+                                    "first",
+                                    "first one"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "morning practice",
+                                "synonyms": [
+                                    "practice",
+                                    "second",
+                                    "second one",
+                                    "last",
+                                    "last one",
+                                    "the last one"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
         }
-      ],
-      "types": [
-        {
-          "name": "MeditationName",
-          "values": [
-            {
-              "name": {
-                "value": "good morning",
-                "synonyms": [
-                  "good",
-                  "first",
-                  "first one"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "morning practice",
-                "synonyms": [
-                  "practice",
-                  "second",
-                  "second one",
-                  "last",
-                  "last one",
-                  "the last one"
-                ]
-              }
-            }
-          ]
-        }
-      ]
     }
-  }
 }
